@@ -10,7 +10,10 @@ typedef struct{
 void reservation(void);
 void viewdetails(void);
 void printticket(char name[],int,int,float);
-void specifictrain(int);
+void specificbus(int);
+void displayReservedSeats(void);
+void exitProgram(void);
+void cancelReservation(void);
 float charge(int,int);
 void login();
 
@@ -39,7 +42,8 @@ int main()
     cout<<"\t";cout<<"\t";cout<<"\t";cout<<"\t";cout<<"\t";
     cout<<"============================= \n";
     cout<<"\n";
-     cout<<"\t";cout<<"\t";cout<<"\t";cout<<"\t";cout<<"\t";cout<<"     Developed By Shourov";
+    cout<<"\t";cout<<"\t";cout<<"\t";cout<<"\t";cout<<"\t";cout<<"Developed By Efficient_Coders     "<<"\t";
+    cout<<"\n";
     cout<<"\n";
     cout<<"\t";cout<<"\t";cout<<"\t";cout<<"\t";cout<<"\t";
     cout<<"============================= \n";
@@ -49,16 +53,18 @@ int main()
 	getch();
 	system("cls");
 	login();
-	int menu_choice,choice_return;
+	int menu_choice;
 	start:
 	    system("cls");
         cout<<"\n\t\t\t=================================\n";
-        cout<<" \t\t\t   BUS TICKET RESERVATION SYSTEM";
+        cout<<" \t\t\t   BUS RESERVATION SYSTEM";
         cout<<"\n\t\t\t=================================\n";
         cout<<"\n                                 \n";
         cout<<"\n1 Reserve Ticket/s\n";
         cout<<"\n2 View All Available Bus\n";
-        cout<<"\n3 Exit";
+        cout<<"\n3 View Reserved Tickets\n";
+        cout<<"\n4 Cancel Ticket\n";
+        cout<<"\n5 Exit";
         cout<<"\n\n Enter your Choice:";
         cin>>menu_choice;
         switch(menu_choice)
@@ -67,8 +73,15 @@ int main()
 			break;
 			case 2: viewdetails();
 			break;
+			case 3: displayReservedSeats();
+            break;
+            case 4:cancelReservation();
+            break;
+            case 5:exitProgram();
+
+
 			default:
-			cout<<"\nInvalid choice";
+			cout<<"\nInvalid choice";Sleep(150);
         }
         goto start;
         return(0);
@@ -78,8 +91,8 @@ void login()
 	int a=0,i=0;
     char uname[10],c=' ';
     char pword[10],code[10];
-    char user[15]="shourov";
-    char pass[15]="demo1234";
+    char user[15]="admin";
+    char pass[15]="admin";
     do
 {
 
@@ -99,12 +112,12 @@ void login()
 	}
 	pword[i]='\0';
 	i=0;
-		if(strcmp(uname,"shourov")==0 && strcmp(pword,"demo1234")==0)
+		if(strcmp(uname,"admin")==0 && strcmp(pword,"admin")==0)
 	{
-	cout<<"  \n\n\n       Thank you for log in  !! YOUR LOGIN IS SUCCESSFUL";
-	cout<<"\n\n\n\t\t\t\t Press Any Key to continue...";
-	getch();
-	break;
+        cout<<"  \n\n\n       Thank you for log in  !! YOUR LOGIN IS SUCCESSFUL";
+        cout<<"\n\n\n\t\t\t\t Press Any Key to continue...";
+        getch();
+        break;
 	}
 	else
 	{
@@ -159,7 +172,7 @@ void reservation(void)
 	}
 	else
 	{
-		cout<<"\nInvalid train Number! Enter again-- ";
+		cout<<"\nInvalid bus Number! Enter again-- ";
 		goto start1;
 	}
 
@@ -245,12 +258,12 @@ void printticket(char name[],int num_of_seats,int bus_num,float charges)
 	cout<<"\t\t-------------------\n\n";
 	cout<<"Name:\t\t\t"<<name;
 	cout<<"\nNumber Of Seats:\t"<<num_of_seats;
-	cout<<"\nTrain Number:\t\t"<<bus_num;
-	specifictrain(bus_num);
+	cout<<"\nBus Number:\t\t"<<bus_num;
+	specificbus(bus_num);
 	cout<<"\nCharges:\t\t"<<charges;
 	cout << "\nTicket print time:\t"<< asctime(localtime(&timetoday));
 }
-void specifictrain(int bus_num)
+void specificbus(int bus_num)
 {
 
 	if (bus_num==1001)
@@ -298,7 +311,7 @@ void specifictrain(int bus_num)
 	if (bus_num==1008)
 	{
 		cout<<"\nBus:\t\t\tDemo8 Express";
-		cout<<"\n Destination:\t\tDhaka to Dinajpur";
+		cout<<"\nDestination:\t\tDhaka to Dinajpur";
 		cout<<"\nDeparture:\t\t4pm ";
 	}
 	if (bus_num==1009)
@@ -310,7 +323,7 @@ void specifictrain(int bus_num)
 	if (bus_num==1010)
 	{
 		cout<<"\nBus:\t\t\tDemo10 Express";
-		cout<<"\nDestination:\t\tDhaka to Kholkhata";
+		cout<<"\nDestination:\t\tDhaka to Singapore";
 		cout<<"\nDeparture:\t\t1.15 ";
 	}
 }
@@ -318,7 +331,7 @@ void viewdetails(void)
 {
 	system("cls");
 	cout<<"-----------------------------------------------------------------------------";
-	cout<<"\nTr.No\tName\t\t\tDestinations\t\tCharges\t\tTime\n";
+	cout<<"\nBus.No\tName\t\t\tDestinations\t\tCharges\t\tTime\n";
 	cout<<"-----------------------------------------------------------------------------";
 	cout<<"\n1001\tDemo1 Express       Dhaka to Chittagong     \tTk.350\t\t9am";
 	cout<<"\n1002\tDemo2 Express       Dhaka To Rajshahi       \tTk.450\t\t12pm";
@@ -329,10 +342,106 @@ void viewdetails(void)
     cout<<"\n1007\tDemo7 Express       Dhaka To tangail        \tTk.250\t\t1pm";
     cout<<"\n1008\tDemo8 Express       Dhaka To Dinajpur       \tTk.310\t\t4pm";
     cout<<"\n1009\tDemo9 Express       Dhaka To Rajshahi       \tTk.470\t\t3.35pm";
-    cout<<"\n1010\tDemo10 Express      Dhaka To Kholkhata      \tTk.2460\t\t4.15pm";
+    cout<<"\n1010\tDemo10 Express      Dhaka To Singapore      \tTk.2460\t\t4.15pm";
     cout<<"\n";cout<<"\n";
     cout<<"Press Enter to go back to the main menu ";
    getch();
 }
 
+void displayReservedSeats()
+{
+    system("cls");
+    cout << "==================================\n";
+    cout << "   RESERVED SEATS\n";
+    cout << "==================================\n\n";
 
+    FILE* fp;
+    fp = fopen("seats_reserved.txt", "r");
+    if (fp == NULL) {
+        cout << "No seats have been reserved yet.\n";
+    } else {
+        cout << "Name\t\tSeats\tBus Number\tCharges\n";
+        cout << "----------------------------------\n";
+
+        char name[50];
+        int num_of_seats, bus_num;
+        float charges;
+
+        while (fscanf(fp, "%s %d %d %f", name, &num_of_seats, &bus_num, &charges) != EOF) {
+            cout << name << "\t\t" << num_of_seats << "\t" << bus_num << "\t\t" << charges << "\n";
+        }
+
+        fclose(fp);
+    }
+
+    cout << "\nPress Enter to go back to the main menu ";
+    getch();
+}
+
+void cancelReservation()
+{
+    system("cls");
+    cout << "==================================\n";
+    cout << "   CANCEL RESERVED TICKET\n";
+    cout << "==================================\n\n";
+
+    char cancelName[50];
+    bool found = false;
+
+    cout << "Enter passenger's name to cancel reservation: ";
+    cin.ignore();
+    cin.getline(cancelName, 50);
+
+    FILE* fp;
+    FILE* tempFp;
+    fp = fopen("seats_reserved.txt", "r");
+    tempFp = fopen("temp_seats_reserved.txt", "w");
+
+    if (fp == NULL)
+    {
+        cout << "No seats have been reserved yet.\n";
+    }
+
+    else
+    {
+        char name[50];
+        int num_of_seats, bus_num;
+        float charges;
+
+        while (fscanf(fp, "%s %d %d %f", name, &num_of_seats, &bus_num, &charges) != EOF)
+        {
+            if (strcmp(name, cancelName) == 0)
+            {
+                found = true;
+                cout << "Reservation for " << name << " has been canceled.\n";
+            }
+            else
+            {
+                fprintf(tempFp, "%s %d %d %.2f\n", name, num_of_seats, bus_num, charges);
+            }
+        }
+
+        fclose(fp);
+        fclose(tempFp);
+
+        remove("seats_reserved.txt");
+        rename("temp_seats_reserved.txt", "seats_reserved.txt");
+
+        if (!found)
+        {
+            cout << "No reservation found for " << cancelName << ".\n";
+        }
+    }
+
+    cout << "\nPress Enter to go back to the main menu ";
+    getch();
+}
+
+void exitProgram()
+{
+    system("cls");
+    cout << "Exiting the Bus Reservation System...\n";
+    cout << "Thank you for using the system!\n";
+    getch();
+    exit(0);
+}
